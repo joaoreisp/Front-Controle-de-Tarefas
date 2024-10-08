@@ -23,7 +23,7 @@ class SistemaGerenciamentoTarefas:
         self.tarefa_selecionada_indice = None  # Armazena o índice da tarefa selecionada
 
         # Carregar imagem de fundo
-        self.background_image = ctk.CTkImage(Image.open("assets\test.jpg"), size=(900, 600))
+        self.background_image = ctk.CTkImage(Image.open("assets\\test.jpg"), size=(900, 600))
 
         # Exibe a tela inicial
         self.tela_inicial()
