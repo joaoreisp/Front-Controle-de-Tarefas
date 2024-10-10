@@ -9,11 +9,8 @@ class SistemaGerenciamentoTarefas:
         self.root = root
         self.root.title("Sistema de Gerenciamento de Tarefas")
         self.root.geometry("900x600")
-
-        # Configura o estilo do CustomTkinter
-        ctk.set_appearance_mode("dark")  # Estilo Dark
-        ctk.set_default_color_theme("blue")  # Tema Azul
-
+        
+        
         # Senha padrão
         self.senha = "12345"
 
@@ -23,7 +20,7 @@ class SistemaGerenciamentoTarefas:
         self.tarefa_selecionada_indice = None  # Armazena o índice da tarefa selecionada
 
         # Carregar imagem de fundo
-        self.background_image = ctk.CTkImage(Image.open("assets\\test.jpg"), size=(900, 600))
+        self.background_image = ctk.CTkImage(Image.open("assets\\fundo.png"), size=(900, 600))
 
         # Exibe a tela inicial
         self.tela_inicial()
@@ -48,7 +45,7 @@ class SistemaGerenciamentoTarefas:
 
     def adicionar_botao_voltar(self, comando):
         """ Adiciona um botão 'Voltar' no canto superior esquerdo """
-        btn_voltar = ctk.CTkButton(self.root, text="Voltar", font=("Arial", 12), command=comando)
+        btn_voltar = ctk.CTkButton(self.root, text="Voltar", font=("Arial", 12), command=comando, fg_color="#3A5357")
         btn_voltar.place(x=10, y=10)
 
     def tela_inicial(self):
@@ -63,17 +60,17 @@ class SistemaGerenciamentoTarefas:
         self.tarefa_selecionada_indice = None
 
         # Título
-        label = ctk.CTkLabel(self.root, text="Sistema de Gerenciamento de Tarefas", font=("Arial", 20))
-        label.pack(pady=40)
+        label = ctk.CTkLabel(self.root, text="Sistema de Gerenciamento de Tarefas", font=("Arial", 20), padx=5, pady=5)
+        label.pack(pady=(40, 110))
 
         # Botões
-        btn_add_tarefa = ctk.CTkButton(self.root, text="Adicionar Tarefa", font=("Arial", 12), width=200, command=self.tela_adicionar_tarefa)
+        btn_add_tarefa = ctk.CTkButton(self.root, text="Adicionar Tarefa", font=("Arial", 12), width=200, command=self.tela_adicionar_tarefa, fg_color="black")
         btn_add_tarefa.pack(pady=10)
 
-        btn_ver_tarefas = ctk.CTkButton(self.root, text="Ver Todas as Tarefas", font=("Arial", 12), width=200, command=self.tela_lista_tarefas)
+        btn_ver_tarefas = ctk.CTkButton(self.root, text="Ver Todas as Tarefas", font=("Arial", 12), width=200, command=self.tela_lista_tarefas, fg_color="black")
         btn_ver_tarefas.pack(pady=10)
 
-        btn_redefinir_senha = ctk.CTkButton(self.root, text="Redefinir Senha", font=("Arial", 12), width=200, command=self.tela_solicitar_senha_redefinir)
+        btn_redefinir_senha = ctk.CTkButton(self.root, text="Redefinir Senha", font=("Arial", 12), width=200, command=self.tela_solicitar_senha_redefinir, fg_color="black")
         btn_redefinir_senha.pack(pady=10)
 
     def tela_adicionar_tarefa(self):
@@ -85,36 +82,35 @@ class SistemaGerenciamentoTarefas:
 
         self.adicionar_botao_voltar(self.tela_inicial)
 
-        ctk.CTkLabel(self.root, text="Adicionar Tarefa", font=("Arial", 16)).pack(pady=5)
-        nome_entry = ctk.CTkEntry(self.root, font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Adicionar Tarefa", font=("Arial", 16), padx=30, pady=2).pack(pady=5)
+        nome_entry = ctk.CTkEntry(self.root, font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         nome_entry.pack(pady=5)
 
         # Outros campos de entrada
-        ctk.CTkLabel(self.root, text="Tipo da Tarefa", font=("Arial", 12)).pack(pady=5)
+        ctk.CTkLabel(self.root, text="Tipo da Tarefa", font=("Arial", 12), padx=35, pady=2).pack(pady=5)
         tipo_var = ctk.StringVar()
-        tipo_menu = ctk.CTkComboBox(self.root, variable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12))
+        tipo_menu = ctk.CTkComboBox(self.root, variable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         tipo_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Prazo (dd/mm/yyyy)", font=("Arial", 12)).pack(pady=5)
-        prazo_entry = ctk.CTkEntry(self.root, font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Prazo (dd/mm/yyyy)", font=("Arial", 12), padx=20, pady=2).pack(pady=5)
+        prazo_entry = ctk.CTkEntry(self.root, fg_color="#AAA3A3", font=("Arial", 12), text_color="black")
         prazo_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Prioridade", font=("Arial", 12)).pack(pady=5)
+        ctk.CTkLabel(self.root, text="Prioridade", font=("Arial", 12), padx=45, pady=2).pack(pady=5)
         prioridade_var = ctk.StringVar()
-        prioridade_menu = ctk.CTkComboBox(self.root, variable=prioridade_var, values=["Baixa", "Média", "Alta"], font=("Arial", 12))
+        prioridade_menu = ctk.CTkComboBox(self.root, variable=prioridade_var, values=["Baixa", "Média", "Alta"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         prioridade_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Status", font=("Arial", 12)).pack(pady=5)
+        ctk.CTkLabel(self.root, text="Status", font=("Arial", 12), padx=57, pady=2).pack(pady=5)
         status_var = ctk.StringVar(value="Pendente")
-        status_menu = ctk.CTkComboBox(self.root, variable=status_var, values=["Pendente", "Concluída", "Parcialmente Concluída"], font=("Arial", 12))
+        status_menu = ctk.CTkComboBox(self.root, variable=status_var, values=["Pendente", "Concluída", "Parcialmente Concluída"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         status_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Descrição", font=("Arial", 12)).pack(pady=5)
-        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=100, width=400)
+        ctk.CTkLabel(self.root, text="Descrição", font=("Arial", 12), padx=47, pady=2).pack(pady=5)
+        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=100, width=400, fg_color="#AAA3A3", padx=5, pady=2, text_color="black")
         descricao_entry.pack(pady=5)
 
-        btn_salvar = ctk.CTkButton(self.root, text="Salvar Tarefa", font=("Arial", 12), width=200,
-                                   command=lambda: self.salvar_tarefa(nome_entry.get(), tipo_var.get(), prazo_entry.get(), prioridade_var.get(), status_var.get(), descricao_entry.get("1.0", "end-1c")))
+        btn_salvar = ctk.CTkButton(self.root, text="Salvar Tarefa", font=("Arial", 12), width=200, fg_color="black",command=lambda: self.salvar_tarefa(nome_entry.get(), tipo_var.get(), prazo_entry.get(), prioridade_var.get(), status_var.get(), descricao_entry.get("1.0", "end-1c")))
         btn_salvar.pack(pady=20)
 
     def salvar_tarefa(self, nome, tipo, prazo, prioridade, status, descricao):
@@ -136,7 +132,7 @@ class SistemaGerenciamentoTarefas:
 
         self.adicionar_botao_voltar(self.tela_inicial)
 
-        label = ctk.CTkLabel(self.root, text="Lista de Tarefas", font=("Arial", 16))
+        label = ctk.CTkLabel(self.root, text="Lista de Tarefas", font=("Arial", 16), padx=10, pady=10)
         label.pack(pady=20)
 
         frame_lista = ctk.CTkFrame(self.root)
@@ -158,16 +154,16 @@ class SistemaGerenciamentoTarefas:
         for tarefa in self.tarefas:
             self.lista_tarefas.insert("", "end", values=(tarefa["nome"], tarefa["tipo"], tarefa["prazo"], tarefa["prioridade"], tarefa["status"]))
 
-        btn_editar_tarefa = ctk.CTkButton(self.root, text="Editar Tarefa", font=("Arial", 12), width=200, command=self.ver_descricao_tarefa)
+        btn_editar_tarefa = ctk.CTkButton(self.root, text="Editar Tarefa", font=("Arial", 12), width=200, command=self.ver_descricao_tarefa, fg_color="black")
         btn_editar_tarefa.pack(pady=10)
 
-        btn_ver_detalhes = ctk.CTkButton(self.root, text="Ver Detalhes da Tarefa", font=("Arial", 12), width=200, command=self.tela_detalhes_tarefa)
+        btn_ver_detalhes = ctk.CTkButton(self.root, text="Ver Detalhes da Tarefa", font=("Arial", 12), width=200, command=self.tela_detalhes_tarefa, fg_color="black")
         btn_ver_detalhes.pack(pady=10)
 
-        btn_marcar_concluida = ctk.CTkButton(self.root, text="Marcar como Concluída", font=("Arial", 12), width=200, command=self.marcar_concluida)
+        btn_marcar_concluida = ctk.CTkButton(self.root, text="Marcar como Concluída", font=("Arial", 12), width=200, command=self.marcar_concluida, fg_color="black")
         btn_marcar_concluida.pack(pady=10)
         
-        btn_remover = ctk.CTkButton(self.root, text="Remover", font=("Arial", 12), width=20, command=self.tela_solicitar_senha_para_remover)
+        btn_remover = ctk.CTkButton(self.root, text="Remover", font=("Arial", 12), width=200, command=self.tela_solicitar_senha_para_remover, fg_color="black")
         btn_remover.pack(pady=10)
 
     def ver_descricao_tarefa(self):
@@ -184,22 +180,23 @@ class SistemaGerenciamentoTarefas:
         if self.tarefa_selecionada is None:
             messagebox.showerror("Erro", "Selecione uma tarefa para ver os detalhes.")
             return
-
+        
         tarefa = self.tarefas[self.tarefa_selecionada]
 
         for widget in self.root.winfo_children():
             widget.destroy()
 
+        self.carregar_fundo()
         self.adicionar_botao_voltar(self.tela_lista_tarefas)
 
-        ctk.CTkLabel(self.root, text="Detalhes da Tarefa", font=("Arial", 16)).pack(pady=10)
-        ctk.CTkLabel(self.root, text=f"Nome: {tarefa['nome']}", font=("Arial", 14)).pack(pady=5)
-        ctk.CTkLabel(self.root, text="Descrição:", font=("Arial", 14)).pack(pady=5)
+        ctk.CTkLabel(self.root, text="Detalhes da Tarefa", font=("Arial", 16), padx=5).pack(pady=10)
+        ctk.CTkLabel(self.root, text=f"Nome: {tarefa['nome']}", font=("Arial", 14), width=50,height=50, padx=5, fg_color="#AAA3A3", text_color="black").pack(pady=5)
+        ctk.CTkLabel(self.root, text="Descrição:", font=("Arial", 16), padx=5).pack(pady=5)
 
         # Substitui o rótulo da descrição por um campo branco como na tela de adicionar tarefa
-        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=5, width=40)
+        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=100, width=400, fg_color="#AAA3A3", text_color="black")
         descricao_entry.insert("1.0", tarefa["descricao"])
-        descricao_entry.config(state="disabled")  # Impede edição, já que é uma visualização
+        descricao_entry.configure(state="disabled")  # Impede edição, já que é uma visualização
         descricao_entry.pack(pady=10)
 
     def tela_descricao_tarefa(self):
@@ -207,42 +204,42 @@ class SistemaGerenciamentoTarefas:
         for widget in self.root.winfo_children():
             widget.destroy()
 
+        self.carregar_fundo()
         self.adicionar_botao_voltar(self.tela_lista_tarefas)
 
         tarefa = self.tarefas[self.tarefa_selecionada]
 
-        ctk.CTkLabel(self.root, text="Nome da Tarefa", font=("Arial", 12)).pack(pady=5)
-        nome_entry = ctk.CTkEntry(self.root, font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Nome da Tarefa", font=("Arial", 12), padx=5, pady=2).pack(pady=5)
+        nome_entry = ctk.CTkEntry(self.root, font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         nome_entry.insert(0, tarefa["nome"])
         nome_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Tipo da Tarefa", font=("Arial", 12)).pack(pady=5)
-        tipo_var = ctk.StringVar(value=tarefa["tipo"])
-        tipo_menu = ttk.Combobox(self.root, textvariable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Tipo da Tarefa", font=("Arial", 12), padx=35, pady=2).pack(pady=5)
+        tipo_var = ctk.StringVar()
+        tipo_menu = ctk.CTkComboBox(self.root, variable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         tipo_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Prazo", font=("Arial", 12)).pack(pady=5)
-        prazo_entry = ctk.CTkEntry(self.root, font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Prazo", font=("Arial", 12), padx=50, pady=2).pack(pady=5)
+        prazo_entry = ctk.CTkEntry(self.root, font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         prazo_entry.insert(0, tarefa["prazo"])
         prazo_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Prioridade", font=("Arial", 12)).pack(pady=5)
-        prioridade_var = ctk.StringVar(value=tarefa["prioridade"])
-        prioridade_menu = ttk.Combobox(self.root, textvariable=prioridade_var, values=["Baixa", "Média", "Alta"], font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Prioridade", font=("Arial", 12), padx=45, pady=2).pack(pady=5)
+        prioridade_var = ctk.StringVar()
+        prioridade_menu = ctk.CTkComboBox(self.root, variable=prioridade_var, values=["Baixa", "Média", "Alta"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         prioridade_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Status", font=("Arial", 12)).pack(pady=5)
-        status_var = ctk.StringVar(value=tarefa["status"])
-        status_menu = ttk.Combobox(self.root, textvariable=status_var, values=["Pendente", "Concluída", "Parcialmente Concluída"], font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Status", font=("Arial", 12), padx=57, pady=2).pack(pady=5)
+        status_var = ctk.StringVar(value="Pendente")
+        status_menu = ctk.CTkComboBox(self.root, variable=status_var, values=["Pendente", "Concluída", "Parcialmente Concluída"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         status_menu.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Descrição", font=("Arial", 12)).pack(pady=5)
-        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=5, width=40)
+        ctk.CTkLabel(self.root, text="Descrição", font=("Arial", 12), padx=47, pady=2).pack(pady=5)
+        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=100, width=400, fg_color="#AAA3A3", text_color="black")
         descricao_entry.insert("1.0", tarefa["descricao"])
         descricao_entry.pack(pady=5)
 
-        btn_salvar = ctk.CTkButton(self.root, text="Salvar Alterações", font=("Arial", 12), width=20,
-                               command=lambda: self.salvar_edicao_tarefa(nome_entry.get(), tipo_var.get(), prazo_entry.get(), prioridade_var.get(), status_var.get(), descricao_entry.get("1.0", "end-1c")))
+        btn_salvar = ctk.CTkButton(self.root, text="Salvar Alterações", font=("Arial", 12), width=20, command=lambda: self.salvar_edicao_tarefa(nome_entry.get(), tipo_var.get(), prazo_entry.get(), prioridade_var.get(), status_var.get(), descricao_entry.get("1.0", "end-1c")), fg_color="black")
         btn_salvar.pack(pady=20)
 
     def salvar_edicao_tarefa(self, nome, tipo, prazo, prioridade, status, descricao):
@@ -305,24 +302,24 @@ class SistemaGerenciamentoTarefas:
         for widget in self.root.winfo_children():
             widget.destroy()
 
+        self.carregar_fundo()
         self.adicionar_botao_voltar(self.tela_inicial)
 
-        ctk.CTkLabel(self.root, text="Redefinição de Senha", font=("Arial", 16)).pack(pady=10)
+        ctk.CTkLabel(self.root, text="Redefinição de Senha", font=("Arial", 16), padx=10, pady=10).pack(pady=(10, 40))
 
-        ctk.CTkLabel(self.root, text="Senha atual:", font=("Arial", 12)).pack(pady=5)
-        senha_atual_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Senha atual:", font=("Arial", 12), padx=5, pady=2).pack(pady=5)
+        senha_atual_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         senha_atual_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Nova senha:", font=("Arial", 12)).pack(pady=5)
-        nova_senha_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Nova senha:", font=("Arial", 12), padx=5, pady=2).pack(pady=5)
+        nova_senha_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         nova_senha_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Confirmar nova senha:", font=("Arial", 12)).pack(pady=5)
-        confirmar_nova_senha_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12))
+        ctk.CTkLabel(self.root, text="Confirmar nova senha:", font=("Arial", 12), padx=5, pady=2).pack(pady=5)
+        confirmar_nova_senha_entry = ctk.CTkEntry(self.root, show="*", font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
         confirmar_nova_senha_entry.pack(pady=5)
 
-        btn_salvar_senha = ctk.CTkButton(self.root, text="Redefinir Senha", font=("Arial", 12),
-                                     command=lambda: self.redefinir_senha(senha_atual_entry.get(), nova_senha_entry.get(), confirmar_nova_senha_entry.get()))
+        btn_salvar_senha = ctk.CTkButton(self.root, text="Redefinir Senha", font=("Arial", 12), command=lambda: self.redefinir_senha(senha_atual_entry.get(), nova_senha_entry.get(), confirmar_nova_senha_entry.get()), fg_color="black")
         btn_salvar_senha.pack(pady=20)
 
     def redefinir_senha(self, senha_atual, nova_senha, confirmar_nova_senha):
