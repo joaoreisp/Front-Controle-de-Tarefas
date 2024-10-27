@@ -8,9 +8,11 @@ class SistemaGerenciamentoTarefas:
         """ Inicializa o sistema de gerenciamento de tarefas """
         self.root = root
         self.root.title("Sistema de Gerenciamento de Tarefas")
-        self.root.geometry("900x600")
-        
-        
+        self.root.geometry("1050x610")
+
+        # Adiciona o ícone da janela
+        self.root.iconbitmap("assets/Icon.png")  # Certifique-se de que o caminho esteja correto
+
         # Senha padrão
         self.senha = "12345"
 
@@ -20,7 +22,7 @@ class SistemaGerenciamentoTarefas:
         self.tarefa_selecionada_indice = None  # Armazena o índice da tarefa selecionada
 
         # Carregar imagem de fundo
-        self.background_image = ctk.CTkImage(Image.open("assets\\fundo.png"), size=(900, 600))
+        self.background_image = ctk.CTkImage(Image.open("assets/inicial.png"), size=(505, 610))
 
         # Exibe a tela inicial
         self.tela_inicial()
@@ -45,73 +47,110 @@ class SistemaGerenciamentoTarefas:
 
     def adicionar_botao_voltar(self, comando):
         """ Adiciona um botão 'Voltar' no canto superior esquerdo """
-        btn_voltar = ctk.CTkButton(self.root, text="Voltar", font=("Arial", 12), command=comando, fg_color="#3A5357")
+        btn_voltar = ctk.CTkButton(self.root, text="Voltar", font=("Arial", 12), command=comando, fg_color="#3A5357", hover_color="#2B4145")
         btn_voltar.place(x=10, y=10)
 
     def tela_inicial(self):
-        """ Exibe a tela inicial """
-        for widget in self.root.winfo_children():
-            widget.destroy()  # Limpa os elementos da tela atual
-
-        self.carregar_fundo()
-
-        # Reinicializa a seleção da tarefa ao voltar para a tela inicial
-        self.tarefa_selecionada = None
-        self.tarefa_selecionada_indice = None
-
-        # Título
-        label = ctk.CTkLabel(self.root, text="Sistema de Gerenciamento de Tarefas", font=("Arial", 20), padx=5, pady=5)
-        label.pack(pady=(40, 110))
-
-        # Botões
-        btn_add_tarefa = ctk.CTkButton(self.root, text="Adicionar Tarefa", font=("Arial", 12), width=200, command=self.tela_adicionar_tarefa, fg_color="black")
-        btn_add_tarefa.pack(pady=10)
-
-        btn_ver_tarefas = ctk.CTkButton(self.root, text="Ver Todas as Tarefas", font=("Arial", 12), width=200, command=self.tela_lista_tarefas, fg_color="black")
-        btn_ver_tarefas.pack(pady=10)
-
-        btn_redefinir_senha = ctk.CTkButton(self.root, text="Redefinir Senha", font=("Arial", 12), width=200, command=self.tela_solicitar_senha_redefinir, fg_color="black")
-        btn_redefinir_senha.pack(pady=10)
-
-    def tela_adicionar_tarefa(self):
-        """ Exibe a tela de adicionar tarefa """
+        """ Cria a tela inicial """
         for widget in self.root.winfo_children():
             widget.destroy()
 
-        self.carregar_fundo()
+        # Divisão da tela em dois frames
+        frame_esquerda = ctk.CTkFrame(self.root, width=526, height=610, fg_color="white")
+        frame_esquerda.grid(row=0, column=0, sticky="ns")
+        frame_esquerda.place(x=0, y=0)
 
-        self.adicionar_botao_voltar(self.tela_inicial)
+        # Ajuste para expandir o frame_direita
+        frame_direita = ctk.CTkFrame(self.root, width=525, height=610, fg_color="#A0C4FF")
+        frame_direita.grid(row=0, column=1, sticky="nsew")  # Expandir para ocupar o espaço restante
+        frame_direita.place(relx=0.5, rely=0, relwidth=0.5, relheight=1)
 
-        ctk.CTkLabel(self.root, text="Adicionar Tarefa", font=("Arial", 16), padx=30, pady=2).pack(pady=5)
-        nome_entry = ctk.CTkEntry(self.root, font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
-        nome_entry.pack(pady=5)
+        # Adicionando a imagem de fundo à esquerda
+        label_imagem = ctk.CTkLabel(frame_esquerda, image=self.background_image)
+        label_imagem.place(relx=0.5, rely=0.5, anchor="center")
 
-        # Outros campos de entrada
-        ctk.CTkLabel(self.root, text="Tipo da Tarefa", font=("Arial", 12), padx=35, pady=2).pack(pady=5)
-        tipo_var = ctk.StringVar()
-        tipo_menu = ctk.CTkComboBox(self.root, variable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
-        tipo_menu.pack(pady=5)
+        # Conteúdo à direita
+        label_titulo = ctk.CTkLabel(frame_direita, text="Tasks To Do", font=("Roboto", 45, "normal"), padx=10, pady=10, text_color="#312D6F")
+        label_titulo.pack(pady=(80, 50))
 
-        ctk.CTkLabel(self.root, text="Prazo (dd/mm/yyyy)", font=("Arial", 12), padx=20, pady=2).pack(pady=5)
-        prazo_entry = ctk.CTkEntry(self.root, fg_color="#AAA3A3", font=("Arial", 12), text_color="black")
-        prazo_entry.pack(pady=5)
 
-        ctk.CTkLabel(self.root, text="Prioridade", font=("Arial", 12), padx=45, pady=2).pack(pady=5)
-        prioridade_var = ctk.StringVar()
-        prioridade_menu = ctk.CTkComboBox(self.root, variable=prioridade_var, values=["Baixa", "Média", "Alta"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
-        prioridade_menu.pack(pady=5)
+        # Botões de ação na coluna da direita
+        btn_add_tarefa = ctk.CTkButton(frame_direita, text="Adicionar Tarefa", font=("Arial", 12), width=245, height=44, command=self.tela_adicionar_tarefa, fg_color="#5856D6", hover_color="#4644ab")
+        btn_add_tarefa.pack(pady=10)
 
-        ctk.CTkLabel(self.root, text="Status", font=("Arial", 12), padx=57, pady=2).pack(pady=5)
-        status_var = ctk.StringVar(value="Pendente")
-        status_menu = ctk.CTkComboBox(self.root, variable=status_var, values=["Pendente", "Concluída", "Parcialmente Concluída"], font=("Arial", 12), fg_color="#AAA3A3", text_color="black")
-        status_menu.pack(pady=5)
+        btn_ver_tarefas = ctk.CTkButton(frame_direita, text="Ver Todas as Tarefas", font=("Arial", 12), width=245, height=44, command=self.tela_lista_tarefas, fg_color="#5856D6", hover_color="#4644ab")
+        btn_ver_tarefas.pack(pady=10)
 
-        ctk.CTkLabel(self.root, text="Descrição", font=("Arial", 12), padx=47, pady=2).pack(pady=5)
-        descricao_entry = ctk.CTkTextbox(self.root, font=("Arial", 12), height=100, width=400, fg_color="#AAA3A3", padx=5, pady=2, text_color="black")
-        descricao_entry.pack(pady=5)
+        btn_redefinir_senha = ctk.CTkButton(frame_direita, text="Redefinir Senha", font=("Arial", 12), width=245, height=44, command=self.tela_solicitar_senha_redefinir, fg_color="#5856D6", hover_color="#4644ab")
+        btn_redefinir_senha.pack(pady=10)
 
-        btn_salvar = ctk.CTkButton(self.root, text="Salvar Tarefa", font=("Arial", 12), width=200, fg_color="black",command=lambda: self.salvar_tarefa(nome_entry.get(), tipo_var.get(), prazo_entry.get(), prioridade_var.get(), status_var.get(), descricao_entry.get("1.0", "end-1c")))
-        btn_salvar.pack(pady=20)
+        # Expande o frame principal em toda a janela
+        self.root.grid_rowconfigure(0, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
+        self.root.grid_columnconfigure(1, weight=1)
+
+
+    def tela_adicionar_tarefa(self):
+       """ Exibe a tela de adicionar tarefa """
+       # Define a cor de fundo da janela principal para cobrir toda a tela
+       self.root.configure(bg="#8497F633")
+    
+       # Remove todos os widgets da tela
+       for widget in self.root.winfo_children():
+           widget.destroy()
+    
+       # Cria o frame principal com as dimensões e posicionamento corretos
+       frame_principal = ctk.CTkFrame(self.root, fg_color="#D6D6F5", corner_radius=10, width=1050, height=610)
+       frame_principal.place(relx=0.5, rely=0.5, anchor="center")
+    
+       # Título da tela
+       ctk.CTkLabel(frame_principal, text="Tarefas", font=("Arial", 20, "bold"), text_color="#312D6F").pack(pady=(10, 20))
+    
+       # Campo Nome
+       ctk.CTkLabel(frame_principal, text="Nome", font=("Arial", 12), text_color="black", anchor="w").pack(fill="x", padx=20)
+       nome_entry = ctk.CTkEntry(frame_principal, placeholder_text="Nome da tarefa", font=("Arial", 12), fg_color="#FFF", text_color="black", border_color="#555")
+       nome_entry.pack(fill="x", padx=20, pady=(0, 10))
+    
+       # Campo Tipo
+       ctk.CTkLabel(frame_principal, text="Tipo", font=("Arial", 12), text_color="black", anchor="w").pack(fill="x", padx=20)
+       tipo_var = ctk.StringVar()
+       tipo_menu = ctk.CTkComboBox(frame_principal, variable=tipo_var, values=["Pessoal", "Empresarial", "Acadêmico"], font=("Arial", 12), fg_color="#FFF", text_color="black")
+       tipo_menu.pack(fill="x", padx=20, pady=(0, 10))
+    
+       # Campo Descrição
+       ctk.CTkLabel(frame_principal, text="Descrição", font=("Arial", 12), text_color="black", anchor="w").pack(fill="x", padx=20)
+       descricao_entry = ctk.CTkTextbox(frame_principal, font=("Arial", 12), height=60, fg_color="#FFF", text_color="black")
+       descricao_entry.pack(fill="x", padx=20, pady=(0, 10))
+    
+       # Linha para Prazo e Status
+       linha_inferior = ctk.CTkFrame(frame_principal, fg_color="#D6D6F5")
+       linha_inferior.pack(fill="x", padx=20, pady=(0, 10))
+    
+       # Campo Prazo
+       ctk.CTkLabel(linha_inferior, text="Prazo", font=("Arial", 12), text_color="black", anchor="w").grid(row=0, column=0, sticky="w", padx=(0, 10))
+       prazo_entry = ctk.CTkEntry(linha_inferior, placeholder_text="dd/mm/yyyy", font=("Arial", 12), fg_color="#FFF", text_color="black")
+       prazo_entry.grid(row=1, column=0, sticky="we")
+    
+       # Campo Status
+       ctk.CTkLabel(linha_inferior, text="Status", font=("Arial", 12), text_color="black", anchor="w").grid(row=0, column=1, sticky="w", padx=(10, 0))
+       status_var = ctk.StringVar(value="Em processo")
+       status_menu = ctk.CTkComboBox(linha_inferior, variable=status_var, values=["Em processo", "Concluída", "Pendente"], font=("Arial", 12), fg_color="#FFF", text_color="black")
+       status_menu.grid(row=1, column=1, sticky="we")
+    
+       # Botão Salvar
+       btn_salvar = ctk.CTkButton(frame_principal, text="Salvar", font=("Arial", 12), width=200, fg_color="#4A3CB1", hover_color="#3A2B8C", command=lambda: self.salvar_tarefa(
+           nome_entry.get(),
+           tipo_var.get(),
+           prazo_entry.get(),
+           status_var.get(),
+           descricao_entry.get("1.0", "end-1c")
+       ))
+       btn_salvar.pack(pady=(20, 10))
+
+
+
+
+
 
     def salvar_tarefa(self, nome, tipo, prazo, prioridade, status, descricao):
         """ Salva a tarefa na lista e no arquivo """
